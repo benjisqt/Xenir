@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const config = require('../config.json');
 const log = require('./Functions/logger');
+const startcmdhandler = require('./Functions/cmdhandler');
+const starteventhandler = require('./Functions/eventhandler');
 
 const client = new Discord.Client({
     intents: [
@@ -14,8 +16,7 @@ const client = new Discord.Client({
     ]
 });
 
-client.on('ready', async(client) => {
-    log(`${client.user.tag} is ready!`);
+client.login(config.token).then(async () => {
+    startcmdhandler(client);
+    starteventhandler(client);
 });
-
-client.login(config.token);
