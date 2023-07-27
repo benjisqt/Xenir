@@ -1,0 +1,34 @@
+{
+  "name": "xenir",
+  "version": "1.0.0",
+  "description": "The best multi-purpose, open-source Discord bot.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjisqt/Xenir.git"
+  },
+  "keywords": [
+    "discordbot",
+    "discord",
+    "bot",
+    "commands",
+    "help",
+    "utility",
+    "funcommands",
+    "moderation"
+  ],
+  "author": "benjisqt",
+  "license": "BSD 3-Clause License",
+  "bugs": {
+    "url": "https://github.com/benjisqt/Xenir/issues"
+  },
+  "homepage": "https://github.com/benjisqt/Xenir#readme",
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "discord.js": "^14.11.0",
+    "fs": "^0.0.1-security"
+  }
+}
