@@ -16,6 +16,8 @@ const client = new Discord.Client({
     ]
 });
 
+client.commands = new Discord.Collection();
+
 client.login(config.token).then(async () => {
     startcmdhandler(client);
     starteventhandler(client);
