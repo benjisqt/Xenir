@@ -17,7 +17,7 @@ module.exports = {
         const count = commit('benjisqt/Xenir');
         const cont = count / 10;
         const commitcount = `Alpha 1.${cont}`
-        const check = await git().log   ({ maxCount: 1 });
+        const check = await git().log({ maxCount: 1 });
 
         return interaction.reply({
             embeds: [
