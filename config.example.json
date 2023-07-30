@@ -1,3 +1,4 @@
 {
-    "token": "BOT TOKEN HERE"
+    "token": "BOT TOKEN HERE",
+    "database": "MONGO CONNECTION STRING HERE"
 }

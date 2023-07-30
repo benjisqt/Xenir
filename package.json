@@ -31,6 +31,7 @@
     "discord.js": "^14.11.0",
     "fs": "^0.0.1-security",
     "git-commit-count": "^1.1.3",
+    "mongoose": "^7.4.1",
     "simple-git": "^3.19.1"
   }
 }
