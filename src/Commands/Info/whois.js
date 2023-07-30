@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } = requi
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('userinfo')
+    .setName('whois')
     .setDescription('Get information about a user!')
     .addUserOption((opt) =>
         opt.setName('user')
