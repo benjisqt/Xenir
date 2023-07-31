@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const log = require('./Functions/logger');
 const startcmdhandler = require('./Functions/cmdhandler');
 const starteventhandler = require('./Functions/eventhandler');
+const { startmodelhandler } = require('./Functions/modelhandler');
 
 // CONNECTION METHODS: MongoDB (more coming soon!)
 const connectionmode = 'mongo';
@@ -25,6 +26,7 @@ client.commands = new Discord.Collection();
 client.login(config.token).then(async () => {
     startcmdhandler(client);
     starteventhandler(client);
+    startmodelhandler();
     if(connectionmode === 'mongo') {
         try {
             const connection = await mongoose.connect(config.database);

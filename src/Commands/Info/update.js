@@ -4,7 +4,7 @@ const commit = require('git-commit-count');
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('patchnotes')
+    .setName('update')
     .setDescription('Get news about the latest release of Xenir, straight from the source!'),
 
     /**
