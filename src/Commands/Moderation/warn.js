@@ -151,7 +151,7 @@ module.exports = {
                 return interaction.reply({
                     embeds: [
                         new EmbedBuilder()
-                        .setTitle(`Listed Warnings For ${user}`)
+                        .setTitle(`Listed Warnings For ${user.tag}`)
                         .setDescription(`${mappedwarnings}`)
                         .setColor('Blurple')
                         .setFooter({ text: `Xenir Warning System` })
@@ -227,7 +227,7 @@ module.exports = {
                                     .setTitle(`Warnings Cleared Successfully.`)
                                     .setDescription(`The warnings for user ${user} have been cleared.`)
                                     .setColor('Blurple')
-                                ], components: [row.components[0].setDisabled(true), row.components[1].setDisabled(true)]
+                                ]
                             });
                         } else {
                             return interaction.channel.send({
@@ -236,7 +236,7 @@ module.exports = {
                                     .setTitle(`Warnings Cleared Successfully.`)
                                     .setDescription(`The warnings for user ${user} have been cleared.`)
                                     .setColor('Blurple')
-                                ], components: [row.components[0].setDisabled(true), row.components[1].setDisabled(true)]
+                                ]
                             });
                         }
                     } else if (results.customId === 'deny') {
@@ -247,7 +247,7 @@ module.exports = {
                                     .setTitle(`Warning Clear Request Denied.`)
                                     .setDescription(`The warnings for ${user} have not been cleared due to being denied authorisation.`)
                                     .setColor('Blurple')
-                                ], components: [row.components[0].setDisabled(true), row.components[1].setDisabled(true)]
+                                ]
                             });
                         } else {
                             return interaction.channel.send({
@@ -256,7 +256,7 @@ module.exports = {
                                     .setTitle(`Warning Clear Request Denied.`)
                                     .setDescription(`The warnings for ${user} have not been cleared due to being denied authorisation.`)
                                     .setColor('Blurple')
-                                ], components: [row.components[0].setDisabled(true), row.components[1].setDisabled(true)]
+                                ]
                             });
                         }
                     } else {
@@ -267,7 +267,7 @@ module.exports = {
                                     .setTitle(`Unknown Interaction.`)
                                     .setDescription(`An unknown interaction has been entered that I do not recognise. Please try again.`)
                                     .setColor('Blurple')
-                                ], components: [row.components[0].setDisabled(true), row.components[1].setDisabled(true)]
+                                ]
                             });
                         } else {
                             return interaction.channel.send({
@@ -276,7 +276,7 @@ module.exports = {
                                     .setTitle(`Unknown Interaction.`)
                                     .setDescription(`An unknown interaction has been entered that I do not recognise. Please try again.`)
                                     .setColor('Blurple')
-                                ], components: [row.components[0].setDisabled(true), row.components[1].setDisabled(true)]
+                                ]
                             });
                         }
                     }
@@ -290,7 +290,7 @@ module.exports = {
                                 .setTitle(`Confirmation Request Expired.`)
                                 .setDescription(`The confirmation for this message has expired. Please request another /warn clear.`)
                                 .setColor('Red')
-                            ], components: [row.components[0].setDisabled(true), row.components[1].setDisabled(true)]
+                            ]
                         });
                     } else {
                         return interaction.channel.send({
@@ -299,7 +299,7 @@ module.exports = {
                                 .setTitle(`Confirmation Request Expired.`)
                                 .setDescription(`The confirmation for this message has expired. Please request another /warn clear.`)
                                 .setColor('Red')
-                            ], components: [row.components[0].setDisabled(true), row.components[1].setDisabled(true)]
+                            ]
                         });
                     }
                 })

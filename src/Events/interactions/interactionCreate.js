@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, Client, EmbedBuilder } = require('discord.js');
+const { ChatInputCommandInteraction, Client, EmbedBuilder, InteractionType } = require('discord.js');
 const afk = require('../../Models/afk');
 
 module.exports = {
@@ -12,6 +12,7 @@ module.exports = {
 
     async execute(interaction, client) {
         if(interaction.user.bot) return;
+        if(interaction.type !== InteractionType.ApplicationCommand) return;
 
         const command = client.commands.get(interaction.commandName);
         if(!command) return interaction.reply({ content: `🚫 That command is either outdated or has been removed.` });
