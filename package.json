@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/benjisqt/Xenir#readme",
   "dependencies": {
+    "canvacord": "^5.4.10",
     "chalk": "^4.0.0",
     "discord.js": "^14.11.0",
     "fs": "^0.0.1-security",

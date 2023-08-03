@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ChatInputCommandInteraction, Client, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, ChatInputCommandInteraction, Client, EmbedBuilder, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType } = require('discord.js');
 const welcome = require('../../Models/welcome');
 
 module.exports = {
@@ -56,11 +56,123 @@ module.exports = {
             case 'setup': {
                 const validchannel = guild.channels.cache.get(channel.id);
                 if(!validchannel) throw "That channel isn't in this server.";
+
+                const data = await welcome.findOne({ Guild: guild.id });
+                if(data) throw "The welcome system is already set up.";
+
+                if(validchannel.type === ChannelType.GuildText) {
+                    if(validchannel.type === ChannelType.GuildAnnouncement) {
+                        throw "Channel is not of type `GuildText` or `GuildAnnouncement`."
+                    }
+                }
+
+                await welcome.create({
+                    Guild: guild.id,
+                    Channel: validchannel.id,
+                    Message: message,
+                });
+
+                return interaction.reply({
+                    embeds: [
+                        new EmbedBuilder()
+                        .setDescription(`✅ | The welcome system has been set up.\nAll welcome messages with your custom message will be sent to <#${validchannel.id}>.\nDon't like this? Change it using /welcome modify :)`)
+                        .setColor('Green')
+                    ]
+                });
             }
             break;
 
             case 'disable': {
+                const data = await welcome.findOne({ Guild: guild.id });
+                if(!data) throw "The welcome system is already disabled.";
 
+                const button1 = new ButtonBuilder()
+                .setCustomId('confirm')
+                .setLabel('Confirm ✅')
+                .setStyle(ButtonStyle.Primary)
+
+                const button2 = new ButtonBuilder()
+                .setCustomId('deny')
+                .setLabel('Deny 🚫')
+                .setStyle(ButtonStyle.Primary)
+
+                const row = new ActionRowBuilder()
+                .setComponents(button1, button2)
+
+                const msg = await interaction.reply({
+                    embeds: [
+                        new EmbedBuilder()
+                        .setTitle(`⚠️ Approval Required.`)
+                        .setDescription(`Are you sure you want to disable the welcome system? Your welcome channel and message will be deleted.`)
+                        .setColor('Orange')
+                    ], components: [row]
+                });
+
+                const collector = await msg.createMessageComponentCollector({ filter: i => i.user.id === interaction.user.id, time: 6000 });
+
+                collector.on('collect', async(results) => {
+                    if(results.customId === 'confirm') {
+                        await welcome.deleteMany({ Guild: guild.id });
+
+                        if(msg) {
+                            return msg.edit({
+                                embeds: [
+                                    new EmbedBuilder()
+                                    .setDescription(`✅ | The welcome system has been disabled.\nAll welcome channel and message data has been deleted.`)
+                                    .setColor('Green')
+                                ]
+                            });
+                        } else {
+                            return interaction.channel.send({
+                                embeds: [
+                                    new EmbedBuilder()
+                                    .setDescription(`✅ | The welcome system has been disabled.\nAll welcome channel and message data has been deleted.`)
+                                    .setColor('Green')
+                                ]
+                            });
+                        }
+                    } else if (results.customId === 'deny') {
+                        if(msg) {
+                            return msg.edit({
+                                embeds: [
+                                    new EmbedBuilder()
+                                    .setTitle(`⚠️ Approval Denied.`)
+                                    .setDescription(`You have denied the request to clear your welcome system data. All of your data is intact.`)
+                                    .setColor('Red')
+                                ]
+                            });
+                        } else {
+                            return interaction.channel.send({
+                                embeds: [
+                                    new EmbedBuilder()
+                                    .setTitle(`⚠️ Approval Denied.`)
+                                    .setDescription(`You have denied the request to clear your welcome system data. All of your data is intact.`)
+                                    .setColor('Red')
+                                ]
+                            });
+                        }
+                    } else {
+                        if(msg) {
+                            return msg.edit({
+                                embeds: [
+                                    new EmbedBuilder()
+                                    .setTitle(`⚠️ Unknown Interaction.`)
+                                    .setDescription(`You have sent data that I do not recognise.`)
+                                    .setColor('Red')
+                                ]
+                            });
+                        } else {
+                            return interaction.channel.send({
+                                embeds: [
+                                    new EmbedBuilder()
+                                    .setTitle(`⚠️ Approval Denied.`)
+                                    .setDescription(`You have sent data that I do not recognise.`)
+                                    .setColor('Red')
+                                ]
+                            });
+                        }
+                    }
+                });
             }
             break;
 
